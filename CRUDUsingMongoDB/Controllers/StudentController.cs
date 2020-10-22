@@ -78,7 +78,7 @@ namespace CRUDUsingMongoDB.Controllers
         [Route("emplist")]
         public IActionResult ListStudents()
         {
-            var result = CRUDHelper.ListRecords<Student>("College","Students");
+            var result = CRUDHelper.ListRecordsAsync<Student>("College","Students");
             return View(result);
 
         }

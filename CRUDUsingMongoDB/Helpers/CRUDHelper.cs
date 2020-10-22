@@ -26,22 +26,22 @@ namespace CRUDUsingMongoDB.Helpers
 
         }
 
-        public static List<T> ListRecords<T>(string databasename, string table)
+        public static async Task<List<T>> ListRecordsAsync<T>(string databasename, string table)
         {
             client = new MongoClient();
             database = client.GetDatabase(databasename);
             var collection = database.GetCollection<T>(table);
-            var result = collection.Find(new BsonDocument()).ToList();
+            var result = await collection.Find(new BsonDocument()).ToListAsync();
             return result;
         }
 
-        public static T LoadRecordById<T>(string databasename, string table, Guid guid)
+        public static async Task<T> LoadRecordById<T>(string databasename, string table, Guid guid)
         {
             client = new MongoClient();
             database = client.GetDatabase(databasename);
             var collection = database.GetCollection<T>(table);
             var filter = Builders<T>.Filter.Eq("Id", guid);
-            return collection.Find(filter).FirstOrDefault();
+            return await collection.Find(filter).FirstOrDefaultAsync();
         }
 
         public static async Task<bool> DeleteRecordById<T>(string databasename, string table, Guid guid)
